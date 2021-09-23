@@ -24,7 +24,7 @@ const database = {
             joined: new Date()
         }
     ]
-}
+};
 
 app.get('/',(req, res) =>{
     res.json(database.users);
@@ -58,6 +58,18 @@ app.post('/register', (req, res) =>{
     );
     res.json(database.users[database.users.length-1]);
 });
+
+app.get('/profile/:id', (req, res) => {
+    const { id } = req.params;
+    database.users.forEach(user => {
+        if(user.id === int(id)){
+            res.json(user);
+        }else{
+            res.status(404).json('No such user.');
+        }
+    });
+});
+
 
 app.listen(3000, ()=>{
     console.log('[INFO] App is running on port 3000');
